@@ -1,17 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const FilterForm = ({ onSubmit }) => {
   const [metrics, setMetrics] = useState([]);
   const [startYear, setStartYear] = useState("");
   const [endYear, setEndYear] = useState("");
   const [districtCodes, setDistrictCodes] = useState("");
-  const [county, setCounty] = useState("");
   const [urbanRuralStatus, setUrbanRuralStatus] = useState("");
   const [schoolType, setSchoolType] = useState("");
+  const [districtOptions, setDistrictOptions] = useState([]);
+  const [metricsOptions, setMetricsOptions] = useState([]);
+  const [selectedCounty, setSelectedCounty] = useState(""); // To store the selected district's county
+
+  useEffect(() => {
+    // Fetch data from the Django backend
+    fetch("http://127.0.0.1:8000/api/get_district_data/")
+      .then((response) => response.json())
+      .then((data) => {
+        setDistrictOptions(data.districts);
+        setMetricsOptions(data.metrics);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   const handleMetricsChange = (e) => {
     const options = Array.from(e.target.selectedOptions, (option) => option.value);
     setMetrics(options);
+  };
+
+  const handleDistrictChange = (e) => {
+    const selectedDistrictCodes = e.target.value.split(",").map((code) => code.trim());
+    setDistrictCodes(selectedDistrictCodes);
+
+    // Find the first selected district and set its county name (assuming all selected districts have the same county)
+    const selectedDistrict = districtOptions.find((district) =>
+      selectedDistrictCodes.includes(district.county_district_code)
+    );
+    if (selectedDistrict) {
+      setSelectedCounty(selectedDistrict.county_name); // Set county name for the selected district
+    }
   };
 
   const handleSubmit = (e) => {
@@ -20,8 +46,7 @@ const FilterForm = ({ onSubmit }) => {
       metrics: metrics.join(","), // Combine metrics as a comma-separated string
       startYear,
       endYear,
-      districtCodes: districtCodes.split(",").map((code) => code.trim()),
-      county,
+      districtCodes: districtCodes,
       urbanRuralStatus,
       schoolType,
     });
@@ -29,6 +54,27 @@ const FilterForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="row g-3 my-3">
+      <div className="col-md-4">
+        <label htmlFor="districtCodes" className="form-label">
+          Select District Code
+        </label>
+        <select
+          id="districtCodes"
+          name="districtCodes"
+          className="form-select"
+          multiple
+          value={districtCodes}
+          onChange={handleDistrictChange}
+        >
+          {districtOptions.map((district) => (
+            <option key={district.county_district_code} value={district.county_district_code}>
+              {district.county_district_code}: {district.district_name}
+            </option>
+          ))}
+        </select>
+        <small className="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple.</small>
+      </div>
+
       <div className="col-md-4">
         <label htmlFor="metrics" className="form-label">
           Select Metrics
@@ -40,13 +86,15 @@ const FilterForm = ({ onSubmit }) => {
           className="form-select"
           onChange={handleMetricsChange}
         >
-          <option value="graduation_rate">Graduation Rate</option>
-          <option value="act_score_avg">ACT Score Avg</option>
-          <option value="student_teacher_ratio">Student-Teacher Ratio</option>
-          <option value="free_reduced_lunch_pct">Free Reduced Lunch %</option>
+          {metricsOptions.map((metric) => (
+            <option key={metric} value={metric}>
+              {metric.replace(/_/g, " ").toUpperCase()}
+            </option>
+          ))}
         </select>
         <small className="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple.</small>
       </div>
+
       <div className="col-md-4">
         <label htmlFor="startYear" className="form-label">
           Start Year
@@ -61,6 +109,7 @@ const FilterForm = ({ onSubmit }) => {
           onChange={(e) => setStartYear(e.target.value)}
         />
       </div>
+
       <div className="col-md-4">
         <label htmlFor="endYear" className="form-label">
           End Year
@@ -75,34 +124,7 @@ const FilterForm = ({ onSubmit }) => {
           onChange={(e) => setEndYear(e.target.value)}
         />
       </div>
-      <div className="col-md-4">
-        <label htmlFor="districtCodes" className="form-label">
-          District Codes
-        </label>
-        <input
-          type="text"
-          id="districtCodes"
-          name="districtCodes"
-          className="form-control"
-          placeholder="e.g., 96088, 96089"
-          value={districtCodes}
-          onChange={(e) => setDistrictCodes(e.target.value)}
-        />
-      </div>
-      <div className="col-md-4">
-        <label htmlFor="county" className="form-label">
-          County
-        </label>
-        <input
-          type="text"
-          id="county"
-          name="county"
-          className="form-control"
-          placeholder="e.g., County Name"
-          value={county}
-          onChange={(e) => setCounty(e.target.value)}
-        />
-      </div>
+
       <div className="col-md-4">
         <label htmlFor="urbanRuralStatus" className="form-label">
           Urban/Rural Status
@@ -119,6 +141,7 @@ const FilterForm = ({ onSubmit }) => {
           <option value="Urban">Urban</option>
         </select>
       </div>
+
       <div className="col-md-4">
         <label htmlFor="schoolType" className="form-label">
           School Type
@@ -135,11 +158,21 @@ const FilterForm = ({ onSubmit }) => {
           <option value="charter">Charter</option>
         </select>
       </div>
+
       <div className="col-12 text-center">
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </div>
+
+      {/* Display the selected county info box after submission */}
+      {selectedCounty && (
+        <div className="col-12 mt-3">
+          <div className="alert alert-info">
+            <strong>Selected District County:</strong> {selectedCounty}
+          </div>
+        </div>
+      )}
     </form>
   );
 };
