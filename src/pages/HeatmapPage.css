@@ -4,3 +4,33 @@
     width: 100%;
     /* Ensure the map takes the full width */
 }
+
+.pinned-info-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.pinned-info-box {
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-box-details {
+    margin-top: 1rem;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
