@@ -9,13 +9,15 @@ const Graphs = ({ data, metrics }) => {
   return (
     <div>
       {metrics.map((metric) => {
-        const metricData = data.map((entry) => ({
-          x: entry.year,
-          y: entry[metric] || 0,
-          type: "scatter",
-          mode: "lines+markers",
-          name: metric.replace(/_/g, " ").toUpperCase(),
-        }));
+        const metricData = [
+          {
+            x: data.map((entry) => entry.year),
+            y: data.map((entry) => entry[metric] || 0),
+            type: "scatter",
+            mode: "lines+markers",
+            name: metric.replace(/_/g, " ").toUpperCase(),
+          },
+        ];
 
         return (
           <div key={metric} className="my-4">

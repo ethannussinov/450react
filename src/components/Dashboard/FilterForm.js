@@ -5,6 +5,9 @@ const FilterForm = ({ onSubmit }) => {
   const [startYear, setStartYear] = useState("");
   const [endYear, setEndYear] = useState("");
   const [districtCodes, setDistrictCodes] = useState("");
+  const [county, setCounty] = useState("");
+  const [urbanRuralStatus, setUrbanRuralStatus] = useState("");
+  const [schoolType, setSchoolType] = useState("");
 
   const handleMetricsChange = (e) => {
     const options = Array.from(e.target.selectedOptions, (option) => option.value);
@@ -14,10 +17,13 @@ const FilterForm = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      metrics: metrics.join(","),
+      metrics: metrics.join(","), // Combine metrics as a comma-separated string
       startYear,
       endYear,
       districtCodes: districtCodes.split(",").map((code) => code.trim()),
+      county,
+      urbanRuralStatus,
+      schoolType,
     });
   };
 
@@ -82,6 +88,52 @@ const FilterForm = ({ onSubmit }) => {
           value={districtCodes}
           onChange={(e) => setDistrictCodes(e.target.value)}
         />
+      </div>
+      <div className="col-md-4">
+        <label htmlFor="county" className="form-label">
+          County
+        </label>
+        <input
+          type="text"
+          id="county"
+          name="county"
+          className="form-control"
+          placeholder="e.g., County Name"
+          value={county}
+          onChange={(e) => setCounty(e.target.value)}
+        />
+      </div>
+      <div className="col-md-4">
+        <label htmlFor="urbanRuralStatus" className="form-label">
+          Urban/Rural Status
+        </label>
+        <select
+          id="urbanRuralStatus"
+          name="urbanRuralStatus"
+          className="form-select"
+          value={urbanRuralStatus}
+          onChange={(e) => setUrbanRuralStatus(e.target.value)}
+        >
+          <option value="">Any</option>
+          <option value="Suburban">Suburban</option>
+          <option value="Urban">Urban</option>
+        </select>
+      </div>
+      <div className="col-md-4">
+        <label htmlFor="schoolType" className="form-label">
+          School Type
+        </label>
+        <select
+          id="schoolType"
+          name="schoolType"
+          className="form-select"
+          value={schoolType}
+          onChange={(e) => setSchoolType(e.target.value)}
+        >
+          <option value="">Any</option>
+          <option value="public">Public</option>
+          <option value="charter">Charter</option>
+        </select>
       </div>
       <div className="col-12 text-center">
         <button type="submit" className="btn btn-primary">

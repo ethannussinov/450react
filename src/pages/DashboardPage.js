@@ -8,10 +8,20 @@ const DashboardPage = () => {
 
   const handleFilterSubmit = async (filters) => {
     try {
-      const response = await fetch(
-        `/api/dashboard-data/?metrics=${filters.metrics}&start_year=${filters.startYear}&end_year=${filters.endYear}&district_code=${filters.districtCodes.join(",")}`
-      );
+      const query = new URLSearchParams({
+        metrics: filters.metrics,
+        start_year: filters.startYear,
+        end_year: filters.endYear,
+        district_code: filters.districtCodes.join(","),
+        county: filters.county,
+        urban_rural_status: filters.urbanRuralStatus,
+        school_type: filters.schoolType,
+      }).toString();
+
+      console.log(`http://127.0.0.1:8000/api/dashboard-data/?${query}`);
+      const response = await fetch(`http://127.0.0.1:8000/api/dashboard-data/?${query}`);
       const result = await response.json();
+
       if (result.error) {
         alert(result.error);
       } else {
