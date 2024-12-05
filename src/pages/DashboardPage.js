@@ -29,6 +29,8 @@ const DashboardPage = () => {
       }
   
       const result = await response.json();
+      console.log("Fetched Data from Backend:", result); // Log API response
+
       if (result.error) {
         setError(result.error);
       } else {

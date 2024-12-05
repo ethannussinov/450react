@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import Select from "react-select";
 
 const FilterForm = ({ onSubmit }) => {
   const [districtMetrics, setDistrictMetrics] = useState([]);
@@ -23,9 +24,24 @@ const FilterForm = ({ onSubmit }) => {
           "discipline_more_10_days_rate",
         ];
 
-        setDistrictOptions(data.districts);
-        setDistrictMetrics(data.metrics.filter((metric) => !knownDisciplineMetrics.includes(metric)));
-        setDisciplineMetrics(data.metrics.filter((metric) => knownDisciplineMetrics.includes(metric)));
+        setDistrictOptions(
+          data.districts.map((district) => ({
+            value: district.county_district_code,
+            label: `${district.county_district_code}: ${district.district_name}`,
+          }))
+        );
+
+        setDistrictMetrics(
+          data.metrics
+            .filter((metric) => !knownDisciplineMetrics.includes(metric))
+            .map((metric) => ({ value: metric, label: metric.replace(/_/g, " ").toUpperCase() }))
+        );
+
+        setDisciplineMetrics(
+          data.metrics
+            .filter((metric) => knownDisciplineMetrics.includes(metric))
+            .map((metric) => ({ value: metric, label: metric.replace(/_/g, " ").toUpperCase() }))
+        );
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -39,11 +55,13 @@ const FilterForm = ({ onSubmit }) => {
     }
 
     const filters = {
-      districtCodes: selectedDistricts,
-      metrics: [...selectedDistrictMetrics, ...selectedDisciplineMetrics],
+      districtCodes: selectedDistricts.map((district) => district.value),
+      metrics: [...selectedDistrictMetrics, ...selectedDisciplineMetrics].map((metric) => metric.value),
       startYear: yearRange[0],
       endYear: yearRange[1],
     };
+    console.log("Filters Submitted to DashboardPage:", filters); // Log user filters
+
     onSubmit(filters);
   };
 
@@ -54,21 +72,16 @@ const FilterForm = ({ onSubmit }) => {
         <label htmlFor="districts" className="form-label">
           Select Districts
         </label>
-        <select
+        <Select
           id="districts"
-          className="form-select"
-          multiple
+          options={districtOptions}
+          isMulti
+          placeholder="Select Districts"
           value={selectedDistricts}
-          onChange={(e) =>
-            setSelectedDistricts(Array.from(e.target.selectedOptions, (option) => option.value))
-          }
-        >
-          {districtOptions.map((district) => (
-            <option key={district.county_district_code} value={district.county_district_code}>
-              {district.county_district_code}: {district.district_name}
-            </option>
-          ))}
-        </select>
+          onChange={(selectedOptions) => setSelectedDistricts(selectedOptions || [])}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
       </div>
 
       {/* District Metrics */}
@@ -76,21 +89,16 @@ const FilterForm = ({ onSubmit }) => {
         <label htmlFor="districtMetrics" className="form-label">
           Select District Metrics
         </label>
-        <select
+        <Select
           id="districtMetrics"
-          className="form-select"
-          multiple
+          options={districtMetrics}
+          isMulti
+          placeholder="Select District Metrics"
           value={selectedDistrictMetrics}
-          onChange={(e) =>
-            setSelectedDistrictMetrics(Array.from(e.target.selectedOptions, (option) => option.value))
-          }
-        >
-          {districtMetrics.map((metric) => (
-            <option key={metric} value={metric}>
-              {metric.replace(/_/g, " ").toUpperCase()}
-            </option>
-          ))}
-        </select>
+          onChange={(selectedOptions) => setSelectedDistrictMetrics(selectedOptions || [])}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
       </div>
 
       {/* Discipline Metrics */}
@@ -98,21 +106,16 @@ const FilterForm = ({ onSubmit }) => {
         <label htmlFor="disciplineMetrics" className="form-label">
           Select Discipline Metrics
         </label>
-        <select
+        <Select
           id="disciplineMetrics"
-          className="form-select"
-          multiple
+          options={disciplineMetrics}
+          isMulti
+          placeholder="Select Discipline Metrics"
           value={selectedDisciplineMetrics}
-          onChange={(e) =>
-            setSelectedDisciplineMetrics(Array.from(e.target.selectedOptions, (option) => option.value))
-          }
-        >
-          {disciplineMetrics.map((metric) => (
-            <option key={metric} value={metric}>
-              {metric.replace(/_/g, " ").toUpperCase()}
-            </option>
-          ))}
-        </select>
+          onChange={(selectedOptions) => setSelectedDisciplineMetrics(selectedOptions || [])}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
       </div>
 
       {/* Year Range Slider */}
@@ -126,6 +129,13 @@ const FilterForm = ({ onSubmit }) => {
           max={2023}
           value={yearRange}
           onChange={(value) => setYearRange(value)}
+          className="year-range-slider"
+          trackStyle={[{ backgroundColor: "#007bff" }]}
+          handleStyle={[
+            { borderColor: "#007bff", backgroundColor: "#fff" },
+            { borderColor: "#007bff", backgroundColor: "#fff" },
+          ]}
+          railStyle={{ backgroundColor: "#ddd" }}
         />
       </div>
 

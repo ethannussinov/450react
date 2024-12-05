@@ -1,39 +1,132 @@
-.App {
-  text-align: center;
+/* General Body Styling */
+body {
+  background-color: #f5f7fa; /* Light background for modern feel */
+  font-family: 'Inter', sans-serif; /* Clean and modern font */
+  color: #333; /* Subtle dark gray for text */
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Navbar Styling */
+.navbar {
+  background-color: #007bff; /* Blue navbar */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 1rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar-brand {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #ffc107; /* Subtle highlight */
+}
+
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-right: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffc107; /* Highlight on hover */
+}
+
+/* Dashboard Header */
+h1.text-center {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #007bff;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Card Styling for Filters and Graphs */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Filter Form Styling */
+.filter-form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+
+.filter-form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.filter-form select,
+.filter-form input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.filter-form select:focus,
+.filter-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.filter-form button {
+  background-color: #007bff;
   color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.filter-form button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+/* Graphs Styling */
+.graphs {
+  padding: 1.5rem;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+.graphs .plotly-graph {
+  margin: 0 auto;
+}
+
+.graphs .card {
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer (Optional) */
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: #6c757d;
 }
