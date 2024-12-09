@@ -42,31 +42,29 @@ const StLouisMap = ({ selectedDistricts = [] }) => {
         layer.on('add', () => {
             const tooltip = layer.getTooltip();
             if (tooltip) {
-                tooltip.options.permanent = isSelected;
+                tooltip.options.permanent = isSelected; // Update tooltip visibility dynamically
                 tooltip.update();
             }
         });
     };
 
-    // Update GeoJSON styles when selectedDistricts changes
+    // Update GeoJSON styles and tooltips when selectedDistricts changes
     useEffect(() => {
         if (geoJsonLayerRef.current) {
             geoJsonLayerRef.current.eachLayer((layer) => {
                 const districtCode = layer.feature.properties.county_district_code;
                 const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
+
                 const tooltip = layer.getTooltip();
-
                 if (tooltip) {
-                    tooltip.options.permanent = isSelected; // Update tooltip visibility
+                    // Dynamically update tooltip visibility based on selection
+                    tooltip.options.permanent = isSelected;
                     tooltip.update();
-
-                    // if (isSelected) {
-                    //     console.log(`${districtCode}: isSelected = ${isSelected}`);
-                    //     console.log(layer);
-                    // }
                 }
+
+                // Also update the style of the layer
+                layer.setStyle(styleDistrict(layer.feature));
             });
-            geoJsonLayerRef.current.setStyle(styleDistrict);
         }
     }, [selectedDistricts, styleDistrict]); // Include styleDistrict in dependencies
 
