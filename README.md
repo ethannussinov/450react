@@ -1,4 +1,4 @@
-# 450react Project Setup Guide
+# 450react - Frontend API for [Django Backend](https://github.com/ethannussinov/450django)
 
 This tutorial will guide you through the process of pulling the **450react** repository, installing necessary dependencies, and running the project locally on both **Windows** and **macOS**. If you're new to React or Git, don't worry—this tutorial will walk you through each step!
 
