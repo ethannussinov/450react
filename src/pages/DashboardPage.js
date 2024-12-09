@@ -12,7 +12,7 @@ const DashboardPage = () => {
   const handleFilterSubmit = async (filters) => {
     setLoading(true);
     setError(null);
-  
+
     try {
       const query = new URLSearchParams({
         metrics: filters.metrics.join(","),
@@ -22,12 +22,12 @@ const DashboardPage = () => {
         urban_rural_status: filters.urbanRuralStatus,
         school_type: filters.schoolType,
       }).toString();
-  
+
       const response = await fetch(`http://127.0.0.1:8080/api/dashboard-data/?${query}`);
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-  
+
       const result = await response.json();
       console.log("Fetched Data from Backend:", result); // Log API response
 
@@ -43,8 +43,8 @@ const DashboardPage = () => {
       setLoading(false);
     }
   };
-  
-  
+
+
 
   return (
     <div className="container mt-4">
