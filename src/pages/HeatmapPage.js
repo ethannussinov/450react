@@ -10,9 +10,12 @@ const HeatmapPage = () => {
   const [metrics, setMetrics] = useState([]); // To store selected metrics
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(null); // Error state
+  const [selectedDistricts, setSelectedDistricts] = useState([]); // For selected district codes
 
   // This will handle form submission and fetch data
   const handleFilterSubmit = async (filters) => {
+    console.log("Filters submitted:", filters); // Log filters received from FilterForm
+
     setLoading(true);
     setError(null);
 
@@ -23,6 +26,8 @@ const HeatmapPage = () => {
         end_year: filters.endYear,
         district_code: filters.districtCodes.join(","),
       }).toString();
+
+      console.log("Generated query string:", query); // Log the query string
 
       const response = await fetch(`http://127.0.0.1:8080/api/dashboard-data/?${query}`);
       if (!response.ok) {
@@ -37,8 +42,11 @@ const HeatmapPage = () => {
       } else {
         setData(result.data); // Pass data as-is to Graphs
         setMetrics(filters.metrics); // Set metrics for filtering
+        setSelectedDistricts(filters.districtCodes); // Update selected districts
+        console.log("Selected districts updated:", filters.districtCodes);
       }
     } catch (error) {
+      console.error("Error fetching data:", error.message); // Log any errors
       setError(error.message);
     } finally {
       setLoading(false);
@@ -50,8 +58,9 @@ const HeatmapPage = () => {
       <h1 className="text-center">Heatmap</h1>
       <p>View metrics across districts in a geographical map.</p>
 
-      {/* Map Above the Filter Form */}
-      <StLouisMap />
+      {/* Pass selectedDistricts to StLouisMap */}
+      {console.log("Passing selected districts to map:", selectedDistricts)}
+      <StLouisMap selectedDistricts={selectedDistricts} />
 
       {/* Filter Form for user input */}
       <FilterForm onSubmit={handleFilterSubmit} />

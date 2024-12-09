@@ -34,3 +34,20 @@
     background-color: #dc3545;
     border-color: #dc3545;
 }
+
+.district-tooltip {
+    background-color: rgba(255, 255, 255, 0.75);
+    color: black;
+    font-size: 12px;
+    border-radius: 4px;
+    padding: 2px 5px;
+}
+
+.district-tooltip-selected {
+    background-color: rgba(255, 255, 0, 0.75);
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 3px 6px;
+}
