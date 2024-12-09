@@ -85,6 +85,7 @@ Now that the project files are on your computer, you need to install the necessa
 ### Step 3: Run the React App Locally
 
 With the dependencies installed, you're ready to run the React app!
+Make sure to have setup the [Django Backend](https://github.com/ethannussinov/450django) to be able to visualize the data! 
 
 1. Run the following command to start the React development server:
 
