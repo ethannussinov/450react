@@ -14,7 +14,8 @@
                 "OBJECTID": 1,
                 "SCHOOL_DISTRICT": "VALLEY PARK",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 132
+                "SCHOOLCODE": 132,
+                "county_district_code": 96113
             },
             "geometry": {
                 "type": "Polygon",
@@ -2530,7 +2531,8 @@
                 "OBJECTID": 2,
                 "SCHOOL_DISTRICT": "MAPLEWOOD-RICHMOND HEIGHTS",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 118
+                "SCHOOLCODE": 118,
+                "county_district_code": 96107
             },
             "geometry": {
                 "type": "Polygon",
@@ -4738,7 +4740,8 @@
                 "OBJECTID": 3,
                 "SCHOOL_DISTRICT": "BRENTWOOD",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 104
+                "SCHOOLCODE": 104,
+                "county_district_code": 96101
             },
             "geometry": {
                 "type": "MultiPolygon",
@@ -7120,7 +7123,8 @@
                 "OBJECTID": 4,
                 "SCHOOL_DISTRICT": "CLAYTON",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 106
+                "SCHOOLCODE": 106,
+                "county_district_code": 96102
             },
             "geometry": {
                 "type": "Polygon",
@@ -8924,7 +8928,8 @@
                 "OBJECTID": 5,
                 "SCHOOL_DISTRICT": "NORMANDY",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 123
+                "SCHOOLCODE": 123,
+                "county_district_code": 96109
             },
             "geometry": {
                 "type": "Polygon",
@@ -11326,7 +11331,8 @@
                 "OBJECTID": 6,
                 "SCHOOL_DISTRICT": "LADUE",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 117
+                "SCHOOLCODE": 117,
+                "county_district_code": 96106
             },
             "geometry": {
                 "type": "Polygon",
@@ -14754,7 +14760,8 @@
                 "OBJECTID": 7,
                 "SCHOOL_DISTRICT": "RITENOUR",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 127
+                "SCHOOLCODE": 127,
+                "county_district_code": 96110
             },
             "geometry": {
                 "type": "Polygon",
@@ -17686,7 +17693,8 @@
                 "OBJECTID": 8,
                 "SCHOOL_DISTRICT": "UNIVERSITY CITY",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 131
+                "SCHOOLCODE": 131,
+                "county_district_code": 96112
             },
             "geometry": {
                 "type": "MultiPolygon",
@@ -20208,7 +20216,8 @@
                 "OBJECTID": 9,
                 "SCHOOL_DISTRICT": "MEHLVILLE",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 120
+                "SCHOOLCODE": 120,
+                "county_district_code": 96094
             },
             "geometry": {
                 "type": "Polygon",
@@ -30076,7 +30085,8 @@
                 "OBJECTID": 10,
                 "SCHOOL_DISTRICT": "PATTONVILLE",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 126
+                "SCHOOLCODE": 126,
+                "county_district_code": 96090
             },
             "geometry": {
                 "type": "Polygon",
@@ -34832,7 +34842,8 @@
                 "OBJECTID": 11,
                 "SCHOOL_DISTRICT": "HANCOCK PLACE",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 113
+                "SCHOOLCODE": 113,
+                "county_district_code": 96103
             },
             "geometry": {
                 "type": "Polygon",
@@ -36724,7 +36735,8 @@
                 "OBJECTID": 12,
                 "SCHOOL_DISTRICT": "BAYLESS",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 102
+                "SCHOOLCODE": 102,
+                "county_district_code": 96099
             },
             "geometry": {
                 "type": "Polygon",
@@ -38336,7 +38348,8 @@
                 "OBJECTID": 13,
                 "SCHOOL_DISTRICT": "LINDBERGH",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 138
+                "SCHOOLCODE": 138,
+                "county_district_code": 96093
             },
             "geometry": {
                 "type": "Polygon",
@@ -43328,7 +43341,8 @@
                 "OBJECTID": 14,
                 "SCHOOL_DISTRICT": "PARKWAY",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 108
+                "SCHOOLCODE": 108,
+                "county_district_code": 96095
             },
             "geometry": {
                 "type": "Polygon",
@@ -51756,7 +51770,8 @@
                 "OBJECTID": 15,
                 "SCHOOL_DISTRICT": "JENNINGS",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 114
+                "SCHOOLCODE": 114,
+                "county_district_code": 96104
             },
             "geometry": {
                 "type": "Polygon",
@@ -53304,7 +53319,8 @@
                 "OBJECTID": 16,
                 "SCHOOL_DISTRICT": "RIVERVIEW GARDENS",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 128
+                "SCHOOLCODE": 128,
+                "county_district_code": 96111
             },
             "geometry": {
                 "type": "Polygon",
@@ -56392,7 +56408,8 @@
                 "OBJECTID": 17,
                 "SCHOOL_DISTRICT": "AFFTON",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 101
+                "SCHOOLCODE": 101,
+                "county_district_code": 96098
             },
             "geometry": {
                 "type": "Polygon",
@@ -59492,7 +59509,8 @@
                 "OBJECTID": 18,
                 "SCHOOL_DISTRICT": "KIRKWOOD",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 116
+                "SCHOOLCODE": 116,
+                "county_district_code": 96092
             },
             "geometry": {
                 "type": "Polygon",
@@ -62900,7 +62918,8 @@
                 "OBJECTID": 19,
                 "SCHOOL_DISTRICT": "WEBSTER GROVES",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 134
+                "SCHOOLCODE": 134,
+                "county_district_code": 96114
             },
             "geometry": {
                 "type": "Polygon",
@@ -71068,7 +71087,8 @@
                 "OBJECTID": 21,
                 "SCHOOL_DISTRICT": "ROCKWOOD",
                 "last_edited_date": "2014-04-07T03:42:09Z",
-                "SCHOOLCODE": 110
+                "SCHOOLCODE": 110,
+                "county_district_code": 96091
             },
             "geometry": {
                 "type": "Polygon",
@@ -87404,7 +87424,8 @@
                 "OBJECTID": 22,
                 "SCHOOL_DISTRICT": "FERGUSON-FLORISSANT",
                 "last_edited_date": "2020-12-16T17:36:20Z",
-                "SCHOOLCODE": 111
+                "SCHOOLCODE": 111,
+                "county_district_code": 96089
             },
             "geometry": {
                 "type": "Polygon",
@@ -93820,7 +93841,8 @@
                 "OBJECTID": 23,
                 "SCHOOL_DISTRICT": "HAZELWOOD",
                 "last_edited_date": "2020-12-16T17:36:20Z",
-                "SCHOOLCODE": 139
+                "SCHOOLCODE": 139,
+                "county_district_code": 96088
             },
             "geometry": {
                 "type": "Polygon",

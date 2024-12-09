@@ -48,7 +48,7 @@ const HeatmapPage = () => {
   return (
     <div className="container mt-4">
       <h1 className="text-center">Heatmap</h1>
-      <p>View metrics across districts in a geographical heatmap.</p>
+      <p>View metrics across districts in a geographical map.</p>
 
       {/* Map Above the Filter Form */}
       <StLouisMap />
