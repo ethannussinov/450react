@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Select from "react-select";
+import { API_ENDPOINTS, METRIC_CATEGORIES, ERROR_MESSAGES, DEFAULTS } from "../../constants/constants";
 
 const FilterForm = ({ onSubmit }) => {
   const [districtMetrics, setDistrictMetrics] = useState([]);
@@ -9,20 +10,14 @@ const FilterForm = ({ onSubmit }) => {
   const [selectedDistricts, setSelectedDistricts] = useState([]);
   const [selectedDistrictMetrics, setSelectedDistrictMetrics] = useState([]);
   const [selectedDisciplineMetrics, setSelectedDisciplineMetrics] = useState([]);
-  const [yearRange, setYearRange] = useState([1991, 2023]);
+  const [yearRange, setYearRange] = useState(DEFAULTS.YEAR_RANGE);
   const [districtOptions, setDistrictOptions] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8080/api/get_district_data/")
+    fetch(API_ENDPOINTS.GET_DISTRICT_DATA)
       .then((response) => response.json())
       .then((data) => {
-        const knownDisciplineMetrics = [
-          "discipline_incidents_rate",
-          "discipline_removal_in_schl_susp_rate",
-          "discipline_removal_out_schl_susp_rate",
-          "discipline_removal_expulsion_rate",
-          "discipline_more_10_days_rate",
-        ];
+        const knownDisciplineMetrics = METRIC_CATEGORIES.DISCIPLINE;
 
         setDistrictOptions(
           data.districts.map((district) => ({
@@ -50,7 +45,7 @@ const FilterForm = ({ onSubmit }) => {
     e.preventDefault();
 
     if (selectedDistricts.length > 1 && [...selectedDistrictMetrics, ...selectedDisciplineMetrics].length > 1) {
-      alert("You can select multiple districts OR multiple metrics, but not both.");
+      alert(ERROR_MESSAGES.MULTIPLE_SELECTION);
       return;
     }
 
@@ -125,17 +120,14 @@ const FilterForm = ({ onSubmit }) => {
         </label>
         <Slider
           range
-          min={1991}
-          max={2023}
+          min={DEFAULTS.YEAR_RANGE[0]}
+          max={DEFAULTS.YEAR_RANGE[1]}
           value={yearRange}
           onChange={(value) => setYearRange(value)}
           className="year-range-slider"
-          trackStyle={[{ backgroundColor: "#007bff" }]}
-          handleStyle={[
-            { borderColor: "#007bff", backgroundColor: "#fff" },
-            { borderColor: "#007bff", backgroundColor: "#fff" },
-          ]}
-          railStyle={{ backgroundColor: "#ddd" }}
+          trackStyle={DEFAULTS.SLIDER_STYLE.trackStyle}
+          handleStyle={DEFAULTS.SLIDER_STYLE.handleStyle}
+          railStyle={DEFAULTS.SLIDER_STYLE.railStyle}
         />
       </div>
 

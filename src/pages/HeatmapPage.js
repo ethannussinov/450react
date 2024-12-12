@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import './HeatmapPage.css';
 import FilterForm from "../components/Dashboard/FilterForm";
 import Graphs from "../components/Dashboard/Graphs";
+import { API_ENDPOINTS } from "../constants/constants";
 
 const HeatmapPage = () => {
   const [data, setData] = useState([]); // To store data for the graphs
@@ -29,7 +30,7 @@ const HeatmapPage = () => {
 
       console.log("Generated query string:", query); // Log the query string
 
-      const response = await fetch(`http://127.0.0.1:8080/api/dashboard-data/?${query}`);
+      const response = await fetch(`${API_ENDPOINTS.GET_DASHBOARD_DATA}?${query}`);
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }

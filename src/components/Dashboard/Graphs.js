@@ -1,5 +1,6 @@
 import React from "react";
 import Plot from "react-plotly.js";
+import { METRIC_CATEGORIES } from "../../constants/constants";
 
 const Graphs = ({ data, metrics }) => {
   console.log("Data Received by Graphs Component:", data); // Log raw data passed to graphs
@@ -13,19 +14,8 @@ const Graphs = ({ data, metrics }) => {
   }
 
   // Check if selected metrics include demographics and a discipline metric
-  const demographicMetrics = [
-    "enrollment_black_pct",
-    "enrollment_hispanic_pct",
-    "enrollment_asian_pct",
-    "enrollment_white_pct",
-  ];
-  const disciplineMetrics = [
-    "discipline_incidents_rate",
-    "discipline_removal_in_schl_susp_rate",
-    "discipline_removal_out_schl_susp_rate",
-    "discipline_removal_expulsion_rate",
-    "discipline_more_10_days_rate",
-  ];
+  const demographicMetrics = METRIC_CATEGORIES.DEMOGRAPHICS;
+  const disciplineMetrics = METRIC_CATEGORIES.DISCIPLINE;
 
   const selectedDemographics = metrics.filter((metric) => demographicMetrics.includes(metric));
   const selectedDisciplines = metrics.filter((metric) => disciplineMetrics.includes(metric));
@@ -79,7 +69,7 @@ const Graphs = ({ data, metrics }) => {
       {metrics.map((metric) => {
         // Filter data for the current metric
         const filteredData = data.filter((entry) => entry.metric === metric);
-  
+
         // Aggregate data by district
         const districtData = filteredData.reduce((acc, entry) => {
           const district = entry.district_name || "Unknown District";
@@ -90,7 +80,7 @@ const Graphs = ({ data, metrics }) => {
           acc[district].y.push(entry.metric_value);
           return acc;
         }, {});
-  
+
         // Prepare traces for each district
         const traces = Object.entries(districtData).map(([district, values]) => ({
           x: values.x,
@@ -99,7 +89,7 @@ const Graphs = ({ data, metrics }) => {
           mode: "lines+markers",
           name: district,
         }));
-  
+
         return (
           <div key={metric} className="my-4">
             <Plot
@@ -115,7 +105,7 @@ const Graphs = ({ data, metrics }) => {
       })}
     </div>
   );
-  
+
 };
 
 export default Graphs;

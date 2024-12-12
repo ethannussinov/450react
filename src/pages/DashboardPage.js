@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FilterForm from "../components/Dashboard/FilterForm";
 import Graphs from "../components/Dashboard/Graphs";
+import { API_ENDPOINTS } from "../constants/constants";
 
 const DashboardPage = () => {
   const [data, setData] = useState([]);
@@ -23,7 +24,7 @@ const DashboardPage = () => {
         school_type: filters.schoolType,
       }).toString();
 
-      const response = await fetch(`http://127.0.0.1:8080/api/dashboard-data/?${query}`);
+      const response = await fetch(`${API_ENDPOINTS.GET_DASHBOARD_DATA}?${query}`);
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
