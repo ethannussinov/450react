@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Shared/Navbar";
 import DashboardPage from "./pages/DashboardPage";
 import HeatmapPage from "./pages/HeatmapPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DashboardPage />} />
         <Route path="/heatmap" element={<HeatmapPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </Router>
   );

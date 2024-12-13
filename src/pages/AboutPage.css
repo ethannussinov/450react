@@ -1,0 +1,42 @@
+/* Container for the collapsible component */
+.collapsible-container {
+    display: flex;                /* Use flexbox for layout */
+    justify-content: center;      /* Center content horizontally */
+    margin: 20px 0;               /* Add some space around the container */
+    padding: 10px;                /* Optional padding for spacing */
+  }
+  
+/* Style for the collapsible button */
+.collapsible-header {
+    margin-top: 40px;
+    margin-bottom: 0px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+        padding: 10px 20px;           /* Add padding for better click area */
+  font-size: 16px;              /* Adjust font size */
+  background-color: #007bff;    /* Blue background */
+  color: white;                 /* White text */
+  border: none;                 /* Remove border */
+  border-radius: 5px;           /* Optional rounded corners */
+  cursor: pointer;              /* Change cursor to pointer on hover */
+  transition: background-color 0.3s;  /* Smooth background change */
+}
+
+/* Change the button color when hovered */
+.collapsible-header:hover {
+  background-color: #0056b3 ;
+}
+
+/* Content section that expands when the button is clicked */
+.collapsible-content {
+  margin-top: 0px;             /* Space above content */
+  margin-bottom: 40px 0;
+  position: relative;
+  padding: 10px;                /* Padding inside content */
+  background-color: #f1f1f1;    /* Light grey background */
+  border-radius: 5px;           /* Optional rounded corners */
+  width: 100%;                  /* Make it responsive */
+}
