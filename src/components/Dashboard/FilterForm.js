@@ -17,7 +17,7 @@ const FilterForm = ({ onSubmit }) => {
     fetch(API_ENDPOINTS.GET_DISTRICT_DATA)
       .then((response) => response.json())
       .then((data) => {
-        const knownDisciplineMetrics = METRIC_CATEGORIES.DISCIPLINE;
+        const knownDisciplineMetrics = METRIC_CATEGORIES.DISCIPLINE_RATE;
 
         setDistrictOptions(
           data.districts.map((district) => ({
@@ -28,7 +28,7 @@ const FilterForm = ({ onSubmit }) => {
 
         setDistrictMetrics(
           data.metrics
-            .filter((metric) => !knownDisciplineMetrics.includes(metric))
+            .filter((metric) => (!knownDisciplineMetrics.includes(metric) && !METRIC_CATEGORIES.DISCIPLINE_NUMBER.includes(metric)))
             .map((metric) => ({ value: metric, label: metric.replace(/_/g, " ").toUpperCase() }))
         );
 

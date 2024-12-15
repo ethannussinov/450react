@@ -14,12 +14,19 @@ export const METRIC_CATEGORIES = {
         "enrollment_asian_pct",
         "enrollment_white_pct",
     ],
-    DISCIPLINE: [
+    DISCIPLINE_RATE: [
         "discipline_incidents_rate",
         "discipline_removal_in_schl_susp_rate",
         "discipline_removal_out_schl_susp_rate",
         "discipline_removal_expulsion_rate",
         "discipline_more_10_days_rate",
+    ],
+    DISCIPLINE_NUMBER: [
+        "discipline_incidents",
+        "discipline_removal_in_schl_susp",
+        "discipline_removal_out_schl_susp",
+        "discipline_removal_expulsion",
+        "discipline_more_10_days",
     ],
 };
 

@@ -15,7 +15,7 @@ const Graphs = ({ data, metrics }) => {
 
   // Check if selected metrics include demographics and a discipline metric
   const demographicMetrics = METRIC_CATEGORIES.DEMOGRAPHICS;
-  const disciplineMetrics = METRIC_CATEGORIES.DISCIPLINE;
+  const disciplineMetrics = METRIC_CATEGORIES.DISCIPLINE_RATE;
 
   const selectedDemographics = metrics.filter((metric) => demographicMetrics.includes(metric));
   const selectedDisciplines = metrics.filter((metric) => disciplineMetrics.includes(metric));
