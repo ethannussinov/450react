@@ -53,65 +53,33 @@ const StLouisMap = ({ data, metrics, selectedDistricts = [] }) => {
         [data, getMetricValue, getHeatmapColor, isDebug]
     );
 
-    // Update styles on `selectedDistricts` or `currentYear` change
+    // Update styles and tooltips on `selectedDistricts` or `currentYear` change
     useEffect(() => {
         if (geoJsonLayerRef.current) {
             geoJsonLayerRef.current.eachLayer((layer) => {
-                layer.setStyle(styleDistrict(layer.feature));
+                layer.setStyle(styleDistrict(layer.feature)); // Update style
+                const districtCode = layer.feature.properties.county_district_code;
+                const metricValue = getMetricValue(districtCode); // Re-fetch metric value
+
+                // Update tooltip content dynamically
+                const districtName = layer.feature.properties.SCHOOL_DISTRICT;
+                const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
+                layer.bindTooltip(
+                    `${districtName} (${districtCode})<br><strong>Metric Value:</strong> ${metricValue || 'No data'}`,
+                    {
+                        permanent: isSelected,  // Show permanently if selected
+                        direction: "center",
+                        className: isSelected ? "district-tooltip-selected" : "district-tooltip",
+                    }
+                );
             });
         }
-    }, [selectedDistricts, currentYear, styleDistrict]);
+    }, [selectedDistricts, currentYear, styleDistrict, getMetricValue]);
 
     // Function for slider change
     const handleYearChange = (event) => {
         setCurrentYear(parseInt(event.target.value, 10));
     };
-
-    // Function to handle interactions and tooltips for each district
-    const onEachDistrict = (district, layer) => {
-        const districtName = district.properties.SCHOOL_DISTRICT;
-        const districtCode = district.properties.county_district_code;
-        if (isDebug) console.log('Interacting with District:', { districtCode, district });
-
-        // Check if the district is selected
-        const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
-
-        // Add a title attribute (tooltip) to the district
-        layer.bindTooltip(districtName, {
-            permanent: isSelected,  // true: visible all the time; false: visible when hover
-            direction: "center", // Center it on the district
-            className: isSelected ? "district-tooltip-selected" : "district-tooltip", // Optional: add different classes for styling
-        });
-
-        // Update tooltip visibility when `selectedDistricts` changes
-        layer.on('add', () => {
-            const tooltip = layer.getTooltip();
-            if (tooltip) {
-                tooltip.options.permanent = isSelected; // Update tooltip visibility dynamically
-                tooltip.update();
-            }
-        });
-    };
-
-    // // Update GeoJSON styles and tooltips when selectedDistricts changes
-    // useEffect(() => {
-    //     if (geoJsonLayerRef.current) {
-    //         geoJsonLayerRef.current.eachLayer((layer) => {
-    //             const districtCode = layer.feature.properties.county_district_code;
-    //             const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
-
-    //             const tooltip = layer.getTooltip();
-    //             if (tooltip) {
-    //                 // Dynamically update tooltip visibility based on selection
-    //                 tooltip.options.permanent = isSelected;
-    //                 tooltip.update();
-    //             }
-
-    //             // Also update the style of the layer
-    //             layer.setStyle(styleDistrict(layer.feature));
-    //         });
-    //     }
-    // }, [selectedDistricts, styleDistrict]); // Include styleDistrict in dependencies
 
     return (
         <div>
@@ -123,7 +91,6 @@ const StLouisMap = ({ data, metrics, selectedDistricts = [] }) => {
                 <GeoJSON
                     data={districtData}
                     style={styleDistrict}
-                    onEachFeature={onEachDistrict}
                     ref={(layer) => {
                         geoJsonLayerRef.current = layer;
                     }}
