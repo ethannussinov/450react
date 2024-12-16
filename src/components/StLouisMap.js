@@ -3,30 +3,75 @@ import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import districtData from '../data/stl_districts.json'; // Import the GeoJSON file
 
-const StLouisMap = ({ selectedDistricts = [] }) => {
+const StLouisMap = ({ data, metrics, selectedDistricts = [] }) => {
+    const [currentYear, setCurrentYear] = React.useState(1991); // Default year for the slider
     const geoJsonLayerRef = useRef(null); // Reference for the GeoJSON layer
+    const isDebug = false;
 
-    // Memoized function to dynamically style districts
+    // Utility: Get metric value for a district and year
+    const getMetricValue = useCallback(
+        (districtCode) => {
+            if (isDebug) console.log('Fetching Metric Value:', { districtCode, currentYear });
+
+            const districtData = data.find(
+                (item) => Number(item.district_code) === Number(districtCode) && Number(item.year) === currentYear
+            );
+            if (!districtData && isDebug) {
+                console.warn('No data found for districtCode:', districtCode, 'year:', currentYear);
+            }
+            return districtData ? districtData.metric_value : null;
+        },
+        [data, currentYear, isDebug]
+    );
+
+    // Function to calculate color based on metric value
+    const getHeatmapColor = useCallback((value, min, max) => {
+        if (isDebug) console.log('Color Calculation:', { value, min, max });
+        if (value === null || value === undefined) return "#e0e0e0"; // Gray for no data
+        const ratio = (value - min) / (max - min);
+        return `rgba(${255 - ratio * 255}, ${ratio * 255}, 0, 0.8)`; // Gradient from red to green
+    }, [isDebug]);
+
+    // Memoized function to style districts
     const styleDistrict = useCallback(
         (district) => {
             const districtCode = district.properties.county_district_code;
-            const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
+            if (isDebug) console.log('Styling District:', { districtCode, properties: district.properties });
+            const metricValue = getMetricValue(districtCode);
+
+            const minValue = Math.min(...data.map((item) => item.metric_value)); // Minimum metric value
+            const maxValue = Math.max(...data.map((item) => item.metric_value)); // Maximum metric value
 
             return {
-                fillColor: isSelected ? "#ff7800" : "#3388ff", // Highlight selected districts
+                fillColor: getHeatmapColor(metricValue, minValue, maxValue),
                 weight: 2,
                 opacity: 1,
                 color: "#000",
-                fillOpacity: isSelected ? 0.5 : 0.3,
+                fillOpacity: 0.7,
             };
         },
-        [selectedDistricts] // Dependencies for memoization
+        [data, getMetricValue, getHeatmapColor, isDebug]
     );
+
+    // Update styles on `selectedDistricts` or `currentYear` change
+    useEffect(() => {
+        if (geoJsonLayerRef.current) {
+            geoJsonLayerRef.current.eachLayer((layer) => {
+                layer.setStyle(styleDistrict(layer.feature));
+            });
+        }
+    }, [selectedDistricts, currentYear, styleDistrict]);
+
+    // Function for slider change
+    const handleYearChange = (event) => {
+        setCurrentYear(parseInt(event.target.value, 10));
+    };
 
     // Function to handle interactions and tooltips for each district
     const onEachDistrict = (district, layer) => {
         const districtName = district.properties.SCHOOL_DISTRICT;
         const districtCode = district.properties.county_district_code;
+        if (isDebug) console.log('Interacting with District:', { districtCode, district });
 
         // Check if the district is selected
         const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
@@ -48,25 +93,25 @@ const StLouisMap = ({ selectedDistricts = [] }) => {
         });
     };
 
-    // Update GeoJSON styles and tooltips when selectedDistricts changes
-    useEffect(() => {
-        if (geoJsonLayerRef.current) {
-            geoJsonLayerRef.current.eachLayer((layer) => {
-                const districtCode = layer.feature.properties.county_district_code;
-                const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
+    // // Update GeoJSON styles and tooltips when selectedDistricts changes
+    // useEffect(() => {
+    //     if (geoJsonLayerRef.current) {
+    //         geoJsonLayerRef.current.eachLayer((layer) => {
+    //             const districtCode = layer.feature.properties.county_district_code;
+    //             const isSelected = districtCode && selectedDistricts.includes(districtCode.toString());
 
-                const tooltip = layer.getTooltip();
-                if (tooltip) {
-                    // Dynamically update tooltip visibility based on selection
-                    tooltip.options.permanent = isSelected;
-                    tooltip.update();
-                }
+    //             const tooltip = layer.getTooltip();
+    //             if (tooltip) {
+    //                 // Dynamically update tooltip visibility based on selection
+    //                 tooltip.options.permanent = isSelected;
+    //                 tooltip.update();
+    //             }
 
-                // Also update the style of the layer
-                layer.setStyle(styleDistrict(layer.feature));
-            });
-        }
-    }, [selectedDistricts, styleDistrict]); // Include styleDistrict in dependencies
+    //             // Also update the style of the layer
+    //             layer.setStyle(styleDistrict(layer.feature));
+    //         });
+    //     }
+    // }, [selectedDistricts, styleDistrict]); // Include styleDistrict in dependencies
 
     return (
         <div>
@@ -80,10 +125,22 @@ const StLouisMap = ({ selectedDistricts = [] }) => {
                     style={styleDistrict}
                     onEachFeature={onEachDistrict}
                     ref={(layer) => {
-                        geoJsonLayerRef.current = layer; // Store reference to the GeoJSON layer
+                        geoJsonLayerRef.current = layer;
                     }}
                 />
             </MapContainer>
+            <div className="slider-container">
+                <label htmlFor="year-slider">Year: {currentYear}</label>
+                <input
+                    id="year-slider"
+                    type="range"
+                    min={1991}
+                    max={2023}
+                    value={currentYear}
+                    onChange={handleYearChange}
+                    step={1}
+                />
+            </div>
         </div>
     );
 };

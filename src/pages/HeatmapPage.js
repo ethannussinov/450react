@@ -61,7 +61,7 @@ const HeatmapPage = () => {
 
       {/* Pass selectedDistricts to StLouisMap */}
       {console.log("Passing selected districts to map:", selectedDistricts)}
-      <StLouisMap selectedDistricts={selectedDistricts} />
+      <StLouisMap data={data} metrics={metrics} selectedDistricts={selectedDistricts} />
 
       {/* Filter Form for user input */}
       <FilterForm onSubmit={handleFilterSubmit} />
